@@ -19,7 +19,7 @@ function duplicateEncode(word){
    return encoded.join('')
  }
 
-console.log(duplicateEncode("din"))//-->.  "(((");
-console.log(duplicateEncode("recede"))//--> "()()()");
-console.log(duplicateEncode("Success"))//--> ")())())","should ignore case");
-console.log(duplicateEncode("(( @"))//-->  "))((");
+console.log(duplicateEncode("din"))//-->.  "((("
+console.log(duplicateEncode("recede"))//--> "()()()"
+console.log(duplicateEncode("Success"))//--> ")())())"
+console.log(duplicateEncode("(( @"))//-->  "))(("
