@@ -1,5 +1,4 @@
 import random
-import re
 class Hang_man:
 
     def __init__(self):
@@ -7,45 +6,49 @@ class Hang_man:
         list_of_words = ["happy", "funny", "playful", "loud", "party", "cake", "family", "birthday", "people", "baseball", "python", "javascript", "work", "fruit", "apple", "pear", "summer", "rain", "sunshine", "fishing", "walking"]
         word = random.choice(list_of_words)
         self.guess_word = list(word)
-        self.users_choices = []
+        self.display_word = word
+        self.users_choices_correct = []
+        self.users_choices_wrong = []
         self.display_board = []
         
-        #print(self.guess_word)
 
-        
     def display_current_board(self):
-        print([x for x in self.users_choices])
-        print([x for x in self.guess_word if x in self.users_choices])
+        print(f"{len(self.display_word)*'__  '}")
+        print([x for x in self.users_choices_wrong])
+        print(self.users_choices_correct)
+        
 
     
     def match_input(self):
         print("PLAYER 1")
-        answer = str(input("Type single char from a-z\n")).lower()
-        for char in self.guess_word:
-            if char == answer:
-                self.users_choices.append(answer)
-                self.display_current_board()
-                print("That was correct")
-                self.match_input()
+        answer = str(input("Type single char from a-z\n"))
+        
+        if answer in self.guess_word and answer not in self.users_choices_correct:
+            self.users_choices_correct.append(len([x for x in self.guess_word if x == answer])* answer)
+            self.display_current_board()
+            print("That was correct")
             self.check_win()
-            if char != answer:
-                self.users_choices.append(answer)
-                self.display_current_board()
-                self.moves_count += 1
-                print("please try again")
-                self.match_input()
-            self.check_win()
+            self.match_input()
+            
+        else:
+            self.users_choices_wrong.append(answer)
+            self.display_current_board()
+            self.moves_count += 1
+            print("please try again")
+        self.check_win()
+        self.match_input()
+                
         
 
     def check_win(self):
-        self.guess_word.sort()
-        guess_word_str = ''.join(list(self.guess_word))
-        self.users_choices.sort()
-        sorted_users_choices = ''.join(list(self.users_choices))
+        (self.guess_word).sort()
+        newg = list(''.join(self.users_choices_correct))
+        newg.sort()
+        #sorted_users_choices = ''.join(list(self.users_choices_correct))
         
-        if guess_word_str == sorted_users_choices:
+        if self.guess_word == newg:
+             print(f"Your word was {self.display_word.title()}!")
              print("You Win!")
-             print(''.join(self.guess_word))
              exit()
         elif self.moves_count == len(self.guess_word):
              print("Game Over")
@@ -55,7 +58,7 @@ class Hang_man:
     
     def play(self):
         while True:
-            self.check_win()
+            #self.check_win()
             self.match_input()
             
 
@@ -63,8 +66,6 @@ class Hang_man:
         self.display_current_board()
         self.play()
        
-
-
 
 new_game = Hang_man()
 new_game.run()
