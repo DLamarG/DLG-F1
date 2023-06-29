@@ -20,24 +20,22 @@ class Hang_man:
         print()
         print(f"{[x for x in self.users_choices_wrong]} Incorrect Letter(s)")
         print()
-        print(f"{self.users_choices_correct} Correct Letter(s)")
+        print(f"{' '.join(self.users_choices_correct).upper()} \nCorrect Letter(s)")
         print()
         
 
-    
     def match_input(self):
+        print()
         print("PLAYER 1")
         print()
-        answer = str(input("Type single char from a-z\n"))
+        answer = str(input("Type a single letter from a-z\n"))
         print()
-        
-        if answer in self.guess_word and answer not in self.users_choices_correct:
+        if answer in self.guess_word and answer not in self.users_choices_correct and 2*answer not in self.users_choices_correct:
             self.users_choices_correct.append(len([x for x in self.guess_word if x == answer])* answer)
             self.display_current_board()
             print("THAT WAS CORRECT")
             self.check_win()
-            self.match_input()
-            
+            self.match_input()  
         else:
             self.users_choices_wrong.append(answer)
             self.display_current_board()
@@ -47,13 +45,10 @@ class Hang_man:
         self.match_input()
                 
         
-
     def check_win(self):
         (self.guess_word).sort()
         newg = list(''.join(self.users_choices_correct))
         newg.sort()
-        #sorted_users_choices = ''.join(list(self.users_choices_correct))
-        
         if self.guess_word == newg:
              print()
              print(f"Your word was {self.display_word.title()}!")
@@ -64,13 +59,12 @@ class Hang_man:
              print()
              print("Game Over")
              print()
-             print(f"The word was {self.guess_word}! Can you guess what it was?")
+             print(f"The word was {self.guess_word}! Can you guess what the word was?")
              exit()
 
     
     def play(self):
         while True:
-            #self.check_win()
             self.match_input()
             
 
